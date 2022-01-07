@@ -12,8 +12,6 @@ import java.io.PrintWriter;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.HttpConstraint;
-import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,13 +21,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author User
  */
-@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"AdminRole", "ClientRole"}))
 @WebServlet(name = "Users", urlPatterns = {"/Users"})
 public class Users extends HttpServlet {
 
     @Inject
     private UserBean userBean;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,7 +43,7 @@ public class Users extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Users</title>");
+            out.println("<title>Servlet Users</title>");            
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Users at " + request.getContextPath() + "</h1>");
@@ -71,10 +67,10 @@ public class Users extends HttpServlet {
         //processRequest(request, response);
         request.setAttribute("activePage", "Users");
         request.setAttribute("numberOfFreeParkingSpots", 10);
-
+        
         List<UserDetails> users = userBean.getAllUsers();
         request.setAttribute("users", users);
-
+        
         request.getRequestDispatcher("/WEB-INF/pages/users.jsp").forward(request, response);
     }
 
